@@ -1,0 +1,353 @@
+:root {
+  /* Palette — Mughal peacock green + antique gold on warm ivory */
+  --paper: #F5EFE1;
+  --paper-raised: #FFFDF8;
+  --ink: #1C1A15;
+  --muted: #6E6858;
+  --faint: #938C79;
+  --peacock: #0E4D45;
+  --peacock-deep: #0A3A34;
+  --gold: #B98B2E;
+  --gold-light: #E3C67E;
+  --line: rgba(14, 77, 69, 0.16);
+  --line-strong: rgba(14, 77, 69, 0.32);
+  --danger: #9A2B24;
+  --ok: #2E6E4E;
+
+  --font-display: 'Cinzel', Georgia, serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-ui: 'Karla', system-ui, sans-serif;
+
+  --maxw: 460px;
+  --radius: 3px;
+
+  /* Signature motif: a cusped/lancet Mughal arch used as a mask */
+  --arch-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 22'%3E%3Cpath d='M17 0 C 10 6, 2 12, 0 22 L 34 22 C 32 12, 24 6, 17 0 Z' fill='%23000'/%3E%3C/svg%3E");
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-image:
+    radial-gradient(circle at 50% -10%, rgba(185, 139, 46, 0.06), transparent 55%);
+  min-height: 100dvh;
+}
+
+a { color: var(--peacock); }
+
+.shell {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 20px calc(40px + env(safe-area-inset-bottom));
+}
+
+/* ---- Masthead ------------------------------------------------------------ */
+.masthead {
+  text-align: center;
+  padding: 30px 0 18px;
+}
+.masthead .eyebrow {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+}
+.masthead .wordmark {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(26px, 8vw, 34px);
+  letter-spacing: 6px;
+  color: var(--peacock);
+  margin: 6px 0 0;
+}
+.rule-gold {
+  width: 46px; height: 1px;
+  margin: 12px auto 0;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+/* ---- The signature: cusped Mughal arch ---------------------------------- */
+.arch-card {
+  position: relative;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px 22px 24px;
+  margin-top: 6px;
+}
+.arch-card::before {
+  content: '';
+  position: absolute;
+  top: 13px; left: 50%;
+  transform: translateX(-50%);
+  width: 30px; height: 19px;
+  background: var(--gold);
+  -webkit-mask: var(--arch-mask) no-repeat center / contain;
+  mask: var(--arch-mask) no-repeat center / contain;
+  opacity: 0.9;
+}
+
+/* ---- Hero (buffet) ------------------------------------------------------- */
+.hero { text-align: center; padding-top: 20px; }
+.hero .kicker {
+  font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--muted); font-weight: 600;
+}
+.hero h1 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(30px, 10vw, 40px);
+  line-height: 1.05;
+  margin: 8px 0 0;
+  color: var(--ink);
+}
+.hero .price {
+  font-family: var(--font-display);
+  font-size: 34px;
+  color: var(--peacock);
+  margin: 16px 0 2px;
+}
+.hero .price sup { font-size: 16px; top: -0.8em; }
+.hero .price-note { font-size: 13px; color: var(--muted); }
+.hero .window {
+  margin-top: 14px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--peacock-deep);
+}
+
+/* ---- Section label ------------------------------------------------------- */
+.section-label {
+  display: flex; align-items: center; gap: 12px;
+  margin: 30px 0 14px;
+}
+.section-label span {
+  font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--gold); font-weight: 700; white-space: nowrap;
+}
+.section-label::after {
+  content: ''; flex: 1; height: 1px; background: var(--line);
+}
+
+/* ---- Sunday picker ------------------------------------------------------- */
+.sundays { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.sunday-btn {
+  appearance: none;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 6px 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color .15s, box-shadow .15s, background .15s;
+  font-family: var(--font-ui);
+}
+.sunday-btn .rel {
+  font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--faint); font-weight: 700;
+}
+.sunday-btn .mon {
+  font-family: var(--font-serif); font-size: 15px; color: var(--muted); margin-top: 6px;
+}
+.sunday-btn .day {
+  font-family: var(--font-display); font-size: 26px; color: var(--ink); line-height: 1;
+}
+.sunday-btn[aria-pressed='true'] {
+  border-color: var(--peacock);
+  background: var(--peacock);
+  box-shadow: 0 6px 18px rgba(14, 77, 69, 0.22);
+}
+.sunday-btn[aria-pressed='true'] .rel { color: var(--gold-light); }
+.sunday-btn[aria-pressed='true'] .mon,
+.sunday-btn[aria-pressed='true'] .day { color: var(--paper); }
+
+/* ---- Form ---------------------------------------------------------------- */
+.field { margin-top: 16px; }
+.field > label {
+  display: block;
+  font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--muted); font-weight: 700; margin-bottom: 6px;
+}
+.field .optional { color: var(--faint); font-weight: 500; text-transform: none; letter-spacing: 0; }
+.input {
+  width: 100%;
+  font-family: var(--font-ui); font-size: 16px; /* 16px avoids iOS zoom */
+  color: var(--ink);
+  background: var(--paper-raised);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  padding: 13px 14px;
+}
+.input:focus {
+  outline: none;
+  border-color: var(--peacock);
+  box-shadow: 0 0 0 3px rgba(14, 77, 69, 0.12);
+}
+
+/* Party size — button grid, same visual language as the Sunday picker */
+.party-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.party-btn {
+  appearance: none;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 13px 4px;
+  text-align: center;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--ink);
+  transition: border-color .15s, box-shadow .15s, background .15s;
+}
+.party-btn.party-more { font-family: var(--font-ui); font-size: 14px; font-weight: 700; }
+.party-btn[aria-pressed='true'] {
+  border-color: var(--peacock);
+  background: var(--peacock);
+  color: var(--paper);
+  box-shadow: 0 6px 18px rgba(14, 77, 69, 0.22);
+}
+.party-custom { margin-top: 10px; max-width: 160px; }
+.party-custom label {
+  display: block;
+  font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--muted); font-weight: 700; margin-bottom: 6px;
+}
+
+/* Consent */
+.consent {
+  margin-top: 22px; padding: 14px 16px;
+  background: rgba(14, 77, 69, 0.04);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.consent input[type='checkbox'] {
+  margin-top: 3px; width: 18px; height: 18px; accent-color: var(--peacock); flex: none;
+}
+.consent label { font-family: var(--font-ui); font-size: 13px; line-height: 1.5; color: var(--muted); }
+
+/* Buttons */
+.btn {
+  width: 100%;
+  font-family: var(--font-ui); font-weight: 700;
+  font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--paper);
+  background: var(--peacock);
+  border: none; border-radius: var(--radius);
+  padding: 16px; margin-top: 24px; cursor: pointer;
+  transition: background .15s;
+}
+.btn:hover { background: var(--peacock-deep); }
+.btn:disabled { background: var(--faint); cursor: progress; }
+.btn-ghost {
+  background: transparent; color: var(--peacock);
+  border: 1px solid var(--line-strong);
+}
+.btn-ghost:hover { background: rgba(14,77,69,0.05); }
+
+.error-msg {
+  margin-top: 14px; padding: 11px 14px;
+  background: rgba(154, 43, 36, 0.08);
+  border: 1px solid rgba(154, 43, 36, 0.3);
+  border-radius: var(--radius);
+  color: var(--danger); font-size: 14px;
+}
+
+/* ---- Confirmation -------------------------------------------------------- */
+.confirm { text-align: center; padding-top: 24px; }
+.confirm .seal {
+  width: 64px; height: 64px; margin: 0 auto 18px;
+  border-radius: 50%; border: 1.5px solid var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gold); font-size: 30px;
+}
+.confirm h2 { font-family: var(--font-serif); font-size: 30px; margin: 0 0 6px; }
+.confirm .detail { font-family: var(--font-serif); font-size: 19px; color: var(--peacock-deep); margin: 18px 0; }
+.confirm p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+/* ---- Footer -------------------------------------------------------------- */
+.foot {
+  text-align: center; margin-top: 40px; padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-size: 12px; color: var(--faint); line-height: 1.7;
+}
+.foot a { color: var(--muted); }
+
+/* ---- Manager (staff / marketing) ---------------------------------------- */
+.mgr-top {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding: 24px 0 4px;
+}
+.mgr-top h1 { font-family: var(--font-display); font-size: 20px; letter-spacing: 2px; color: var(--peacock); margin: 0; }
+.mgr-top .sign-out { font-size: 12px; color: var(--muted); background: none; border: none; cursor: pointer; text-decoration: underline; }
+
+.week-switch { display: flex; gap: 8px; overflow-x: auto; padding: 14px 0; -webkit-overflow-scrolling: touch; }
+.week-chip {
+  flex: none; padding: 8px 14px; border: 1px solid var(--line-strong);
+  border-radius: 999px; background: var(--paper-raised); font-size: 13px;
+  color: var(--muted); cursor: pointer; white-space: nowrap; font-family: var(--font-ui);
+}
+.week-chip[aria-pressed='true'] { background: var(--peacock); border-color: var(--peacock); color: var(--paper); font-weight: 700; }
+
+.tally { display: flex; gap: 10px; margin: 4px 0 18px; }
+.tally .stat { flex: 1; background: var(--paper-raised); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px; text-align: center; }
+.tally .num { font-family: var(--font-display); font-size: 26px; color: var(--peacock); }
+.tally .lbl { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--faint); font-weight: 700; margin-top: 2px; }
+
+.res-card {
+  background: var(--paper-raised); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 14px 16px; margin-bottom: 10px;
+}
+.res-card.seated { opacity: 0.55; }
+.res-head { display: flex; justify-content: space-between; align-items: baseline; }
+.res-name { font-family: var(--font-serif); font-size: 20px; color: var(--ink); }
+.res-party { font-family: var(--font-display); font-size: 15px; color: var(--peacock); }
+.res-meta { font-size: 13px; color: var(--muted); margin-top: 4px; display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.res-meta a { color: var(--peacock); text-decoration: none; }
+.res-actions { display: flex; gap: 8px; margin-top: 12px; }
+.chip-btn {
+  flex: 1; font-family: var(--font-ui); font-size: 12px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; padding: 9px;
+  border-radius: var(--radius); cursor: pointer; border: 1px solid var(--line-strong);
+  background: var(--paper-raised); color: var(--peacock);
+}
+.chip-btn.solid { background: var(--peacock); color: var(--paper); border-color: var(--peacock); }
+.chip-btn.danger { color: var(--danger); border-color: rgba(154,43,36,0.35); flex: 0 0 auto; }
+
+.tag { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; padding: 2px 7px; border-radius: 999px; }
+.tag.opted-out { background: rgba(154,43,36,0.1); color: var(--danger); }
+.tag.active { background: rgba(46,110,78,0.12); color: var(--ok); }
+
+.toolbar { display: flex; gap: 10px; margin: 6px 0 16px; }
+.toolbar .search { flex: 1; }
+
+.empty { text-align: center; color: var(--faint); font-family: var(--font-serif); font-size: 18px; padding: 40px 0; }
+
+/* ---- PIN gate ------------------------------------------------------------ */
+.gate { max-width: 320px; margin: 12vh auto 0; text-align: center; }
+.gate h1 { font-family: var(--font-display); font-size: 22px; letter-spacing: 3px; color: var(--peacock); }
+.gate p { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+
+/* ---- Legal page ---------------------------------------------------------- */
+.legal { padding-top: 20px; }
+.legal h1 { font-family: var(--font-serif); font-size: 28px; color: var(--ink); }
+.legal h2 { font-family: var(--font-ui); font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); margin-top: 28px; }
+.legal p, .legal li { color: var(--muted); font-size: 15px; line-height: 1.65; }
+
+.loading { text-align: center; color: var(--faint); font-family: var(--font-serif); font-size: 18px; padding: 60px 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
