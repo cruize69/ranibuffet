@@ -1,0 +1,722 @@
+:root {
+  /* Palette — Mughal peacock green + antique gold on warm ivory */
+  --paper: #F5EFE1;
+  --paper-raised: #FFFDF8;
+  --ink: #1C1A15;
+  --muted: #6E6858;
+  --faint: #938C79;
+  --peacock: #0E4D45;
+  --peacock-deep: #0A3A34;
+  --gold: #B98B2E;
+  --gold-light: #E3C67E;
+  --line: rgba(14, 77, 69, 0.16);
+  --line-strong: rgba(14, 77, 69, 0.32);
+  --danger: #9A2B24;
+  --ok: #2E6E4E;
+
+  --font-display: 'Cinzel', Georgia, serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-ui: 'Karla', system-ui, sans-serif;
+  /* The standard for elegant hospitality branding — high-contrast, unmistakably
+     upscale, and instantly legible. No more novelty pivots on this one. */
+  --font-wordmark: 'Playfair Display', serif;
+
+  --maxw: 460px;
+  --herow: 520px;
+  --radius: 3px;
+
+  /* Signature motif: a cusped/lancet Mughal arch used as a mask */
+  --arch-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 22'%3E%3Cpath d='M17 0 C 10 6, 2 12, 0 22 L 34 22 C 32 12, 24 6, 17 0 Z' fill='%23000'/%3E%3C/svg%3E");
+  /* Tall lancet arch — masks the dish photography into little temple niches */
+  --arch-tall: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 128' preserveAspectRatio='none'%3E%3Cpath d='M0 128 V62 C0 32 22 6 50 0 C78 6 100 32 100 62 V128 Z' fill='%23000'/%3E%3C/svg%3E");
+  /* Jali — the pierced lattice screen of a Mughal palace, at a whisper */
+  --jali: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='52' viewBox='0 0 52 52'%3E%3Cg fill='none' stroke='%230E4D45' stroke-width='0.8'%3E%3Cpath d='M26 0 L52 26 L26 52 L0 26 Z' stroke-opacity='0.05'/%3E%3Ccircle cx='26' cy='26' r='11' stroke-opacity='0.038'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+body {
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(185, 139, 46, 0.07), transparent 60%),
+    var(--jali);
+  background-repeat: no-repeat, repeat;
+  min-height: 100dvh;
+}
+
+a { color: var(--peacock); }
+
+.shell {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 20px calc(40px + env(safe-area-inset-bottom));
+}
+
+/* ---- Hero ---------------------------------------------------------------- */
+.hero {
+  position: relative;
+  width: 100%;
+  max-width: var(--herow);
+  margin: 0 auto;
+  height: clamp(330px, 56vh, 460px);
+  overflow: hidden;
+  isolation: isolate;
+  /* Fade the whole hero out rather than painting paper over it — that way the
+     page's jali texture keeps running underneath and there is no seam. */
+  --mask-v: linear-gradient(
+    180deg, #000 0%, #000 56%, rgba(0, 0, 0, 0.72) 76%,
+    rgba(0, 0, 0, 0.28) 90%, rgba(0, 0, 0, 0) 100%
+  );
+  -webkit-mask-image: var(--mask-v);
+  mask-image: var(--mask-v);
+}
+
+.hero-compact {
+  height: clamp(230px, 32vh, 280px);
+  --mask-v: linear-gradient(
+    180deg, #000 0%, #000 44%, rgba(0, 0, 0, 0.68) 70%,
+    rgba(0, 0, 0, 0.24) 88%, rgba(0, 0, 0, 0) 100%
+  );
+}
+.hero-compact .hero-img { object-position: 50% 46%; }
+
+.hero-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: 50% 58%;
+  animation: hero-settle 14s ease-out both;
+}
+@keyframes hero-settle {
+  from { transform: scale(1.09); }
+  to   { transform: scale(1); }
+}
+
+/* Darken the top for the wordmark, then melt the bottom into the paper */
+.hero-scrim {
+  position: absolute; inset: 0;
+  /* Darken the top for the wordmark; the hero's own mask handles the fade-out */
+  background:
+    linear-gradient(
+      180deg,
+      rgba(10, 58, 52, 0.80) 0%,
+      rgba(10, 58, 52, 0.34) 32%,
+      rgba(10, 58, 52, 0.24) 60%,
+      rgba(10, 58, 52, 0.14) 100%
+    ),
+    radial-gradient(118% 80% at 50% 30%, transparent 28%, rgba(10, 34, 30, 0.45) 100%);
+}
+.hero-compact .hero-scrim {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(10, 58, 52, 0.84) 0%,
+      rgba(10, 58, 52, 0.66) 42%,
+      rgba(10, 58, 52, 0.30) 72%,
+      rgba(10, 58, 52, 0.18) 100%
+    ),
+    radial-gradient(118% 90% at 50% 22%, transparent 26%, rgba(10, 34, 30, 0.45) 100%);
+}
+
+.hero-copy {
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  padding: 34px 20px 0;
+  text-align: center;
+}
+.hero-compact .hero-copy { padding-top: 26px; }
+
+/* The apsara medallion — the house crest, sitting over the photograph */
+.hero-crest {
+  display: block;
+  width: auto;
+  height: clamp(66px, 19vw, 86px);
+  margin: 0 auto 13px;
+  filter: drop-shadow(0 5px 14px rgba(6, 24, 20, 0.6))
+          drop-shadow(0 1px 2px rgba(6, 24, 20, 0.4));
+}
+.hero-compact .hero-crest { height: clamp(54px, 15vw, 68px); margin-bottom: 10px; }
+
+.hero .eyebrow {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  font-weight: 600;
+  text-shadow: 0 1px 6px rgba(8, 30, 26, 0.6);
+}
+.hero .wordmark {
+  font-family: var(--font-wordmark);
+  font-style: italic;
+  font-weight: 900;
+  /* Sized against the hero's narrowest width, not by eye, to stay on one line */
+  font-size: clamp(32px, 12.5vw, 52px);
+  letter-spacing: 0;
+  white-space: nowrap;
+  line-height: 1;
+  /* Struck-gold highlights: a light sweep over a bright crown / dark waist bevel */
+  background-image:
+    linear-gradient(
+      104deg,
+      transparent 40%,
+      rgba(255, 253, 242, 0.9) 49%,
+      transparent 58%
+    ),
+    linear-gradient(
+      177deg,
+      #FBF0CF 0%,
+      #EBD196 17%,
+      #C79A3C 38%,
+      #96691E 51%,
+      #DCB768 63%,
+      #F7E8C0 82%,
+      #C29236 100%
+    );
+  background-size: 300% 100%, 100% 100%;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 2px 3px rgba(6, 24, 20, 0.55))
+          drop-shadow(0 8px 22px rgba(6, 24, 20, 0.5));
+  animation: wordmark-sheen 2.8s ease-out 0.5s both;
+}
+@keyframes wordmark-sheen {
+  from { background-position: 145% 0, 0 0; }
+  to   { background-position: -45% 0, 0 0; }
+}
+.hero-compact .wordmark { font-size: clamp(24px, 9.5vw, 38px); }
+
+.hero-place {
+  margin-top: 12px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 15px;
+  color: rgba(245, 239, 225, 0.88);
+  text-shadow: 0 1px 8px rgba(8, 30, 26, 0.7);
+}
+
+.rule-gold {
+  width: 46px; height: 1px;
+  margin: 12px auto 0;
+  background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+}
+
+/* ---- The signature: cusped Mughal arch ---------------------------------- */
+.arch-card {
+  position: relative;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px 22px 24px;
+  margin-top: -28px;
+  z-index: 2;
+  box-shadow: 0 20px 44px -22px rgba(10, 58, 52, 0.5);
+}
+.arch-card::before {
+  content: '';
+  position: absolute;
+  top: 13px; left: 50%;
+  transform: translateX(-50%);
+  width: 30px; height: 19px;
+  background: var(--gold);
+  -webkit-mask: var(--arch-mask) no-repeat center / contain;
+  mask: var(--arch-mask) no-repeat center / contain;
+  opacity: 0.9;
+}
+
+/* ---- Hero (buffet) — ticket-stub composition ----------------------------- */
+.hero-ticket {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: stretch;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin-top: -44px;
+  overflow: hidden;
+  box-shadow: 0 22px 48px -24px rgba(10, 58, 52, 0.55);
+}
+.ticket-main { flex: 1; padding: 22px 16px 20px 22px; }
+.ticket-main .kicker {
+  font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--muted); font-weight: 600;
+}
+.ticket-main h1 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(26px, 8vw, 32px);
+  line-height: 1.05;
+  margin: 4px 0 0;
+  color: var(--ink);
+}
+.ticket-window {
+  margin-top: 12px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(26px, 8vw, 32px);
+  line-height: 1.05;
+  color: var(--peacock-deep);
+}
+.ticket-footnote { margin-top: 10px; font-size: 11px; color: var(--faint); }
+
+.ticket-stub {
+  position: relative;
+  flex: 0 0 118px;
+  width: 118px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 6px;
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(185, 139, 46, 0.28), transparent 70%),
+    var(--peacock);
+  color: var(--paper);
+  border-left: 2px dashed rgba(245, 239, 225, 0.35);
+}
+.ticket-stub::before, .ticket-stub::after {
+  content: '';
+  position: absolute;
+  left: -9px;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--paper);
+}
+.ticket-stub::before { top: -9px; }
+.ticket-stub::after { bottom: -9px; }
+.ticket-stub .stub-price {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  font-family: var(--font-display);
+  line-height: 1;
+  white-space: nowrap;
+}
+.ticket-stub .stub-currency { font-size: 19px; margin: 3px 1px 0 0; color: var(--gold-light); }
+.ticket-stub .stub-amount { font-size: 48px; }
+.ticket-stub .stub-cents { font-size: 16px; margin: 9px 0 0 1px; color: var(--gold-light); }
+.ticket-stub .stub-note {
+  font-size: 9.5px; letter-spacing: 0.5px; text-transform: uppercase;
+  margin-top: 8px; text-align: center; opacity: 0.85;
+}
+
+/* Standfirst under the ticket */
+.lede {
+  margin: 18px 6px 0;
+  font-family: var(--font-serif);
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ---- Section label ------------------------------------------------------- */
+.section-label {
+  display: flex; align-items: center; gap: 12px;
+  margin: 34px 0 16px;
+}
+.section-label span {
+  font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--gold); font-weight: 700; white-space: nowrap;
+}
+.section-label::before,
+.section-label::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line-strong));
+}
+.section-label::after {
+  background: linear-gradient(90deg, var(--line-strong), transparent);
+}
+
+/* ---- A taste of the table — arch-masked dish rail ------------------------ */
+.taste { margin-top: 4px; }
+
+.dish-rail {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  padding: 6px 0 4px;
+}
+
+.dish { margin: 0; }
+.dish-arch {
+  aspect-ratio: 100 / 128;
+  filter: drop-shadow(0 10px 16px rgba(10, 58, 52, 0.3));
+  background: linear-gradient(160deg, var(--gold-light), var(--gold) 55%, var(--peacock-deep));
+  -webkit-mask: var(--arch-tall) no-repeat center / 100% 100%;
+  mask: var(--arch-tall) no-repeat center / 100% 100%;
+}
+.dish-arch img {
+  display: block;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  padding: 1.5px;
+  /* origin = content-box, so the 1.5px padding leaves a gold rim showing through */
+  -webkit-mask: var(--arch-tall) no-repeat center / 100% 100% content-box;
+  mask: var(--arch-tall) no-repeat center / 100% 100% content-box;
+}
+.dish figcaption {
+  margin-top: 9px;
+  font-family: var(--font-serif);
+  font-size: 13.5px;
+  line-height: 1.3;
+  color: var(--muted);
+  text-align: center;
+}
+
+.taste-note {
+  margin: 12px 0 0;
+  text-align: center;
+  font-size: 12px;
+  color: var(--faint);
+  letter-spacing: 0.2px;
+}
+
+/* ---- Sunday picker ------------------------------------------------------- */
+.sundays { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.sunday-btn {
+  appearance: none;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 6px 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color .15s, box-shadow .15s, background .15s;
+  font-family: var(--font-ui);
+}
+.sunday-btn .rel {
+  font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--faint); font-weight: 700;
+}
+.sunday-btn .mon {
+  font-family: var(--font-serif); font-size: 15px; color: var(--muted); margin-top: 6px;
+}
+.sunday-btn .day {
+  font-family: var(--font-display); font-size: 26px; color: var(--ink); line-height: 1;
+}
+.sunday-btn:hover { border-color: var(--line-strong); }
+.sunday-btn[aria-pressed='true'] {
+  border-color: var(--peacock);
+  background: linear-gradient(180deg, var(--peacock), var(--peacock-deep));
+  box-shadow: 0 10px 22px -10px rgba(14, 77, 69, 0.55),
+              inset 0 1px 0 rgba(227, 198, 126, 0.28);
+}
+.sunday-btn[aria-pressed='true'] .rel { color: var(--gold-light); }
+.sunday-btn[aria-pressed='true'] .mon,
+.sunday-btn[aria-pressed='true'] .day { color: var(--paper); }
+
+.date-more-link {
+  display: block; width: 100%; text-align: center;
+  margin-top: 10px; padding: 6px;
+  background: none; border: none; cursor: pointer;
+  font-family: var(--font-ui); font-size: 12.5px; font-weight: 700;
+  letter-spacing: 0.3px; color: var(--peacock);
+}
+.selected-date-note {
+  margin-top: 10px; text-align: center;
+  font-family: var(--font-serif); font-size: 15px; color: var(--peacock-deep);
+}
+
+/* ---- Form ---------------------------------------------------------------- */
+.field { margin-top: 16px; }
+.field > label {
+  display: block;
+  font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--muted); font-weight: 700; margin-bottom: 6px;
+}
+.field .optional { color: var(--faint); font-weight: 500; text-transform: none; letter-spacing: 0; }
+.input {
+  width: 100%;
+  font-family: var(--font-ui); font-size: 16px; /* 16px avoids iOS zoom */
+  color: var(--ink);
+  background: var(--paper-raised);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  padding: 13px 14px;
+}
+.input:focus {
+  outline: none;
+  border-color: var(--peacock);
+  box-shadow: 0 0 0 3px rgba(14, 77, 69, 0.12);
+}
+
+/* Party size — button grid, same visual language as the Sunday picker */
+.party-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.party-btn {
+  appearance: none;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 13px 4px;
+  text-align: center;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--ink);
+  transition: border-color .15s, box-shadow .15s, background .15s;
+}
+.party-btn.party-more { font-family: var(--font-ui); font-size: 14px; font-weight: 700; }
+.party-btn:hover { border-color: var(--line-strong); }
+.party-btn[aria-pressed='true'] {
+  border-color: var(--peacock);
+  background: linear-gradient(180deg, var(--peacock), var(--peacock-deep));
+  color: var(--paper);
+  box-shadow: 0 10px 22px -10px rgba(14, 77, 69, 0.55),
+              inset 0 1px 0 rgba(227, 198, 126, 0.28);
+}
+.party-custom { margin-top: 10px; max-width: 160px; }
+.party-custom label {
+  display: block;
+  font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--muted); font-weight: 700; margin-bottom: 6px;
+}
+
+/* Consent */
+.consent {
+  margin-top: 22px; padding: 14px 16px;
+  background: rgba(14, 77, 69, 0.04);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.consent input[type='checkbox'] {
+  margin-top: 3px; width: 18px; height: 18px; accent-color: var(--peacock); flex: none;
+}
+.consent label { font-family: var(--font-ui); font-size: 13px; line-height: 1.5; color: var(--muted); }
+
+/* Buttons */
+.btn {
+  width: 100%;
+  font-family: var(--font-ui); font-weight: 700;
+  font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--paper);
+  background: linear-gradient(180deg, var(--peacock), var(--peacock-deep));
+  border: none; border-radius: var(--radius);
+  padding: 17px; margin-top: 26px; cursor: pointer;
+  box-shadow: 0 14px 30px -14px rgba(10, 58, 52, 0.8),
+              inset 0 1px 0 rgba(227, 198, 126, 0.35);
+  transition: filter .15s, box-shadow .15s, transform .1s;
+}
+.btn:hover { filter: brightness(1.1); }
+.btn:active { transform: translateY(1px); }
+.btn:disabled {
+  background: var(--faint); cursor: progress;
+  box-shadow: none; filter: none;
+}
+.btn-ghost {
+  background: transparent; color: var(--peacock);
+  border: 1px solid var(--line-strong);
+  box-shadow: none;
+}
+.btn-ghost:hover { background: rgba(14,77,69,0.05); }
+
+.error-msg {
+  margin-top: 14px; padding: 11px 14px;
+  background: rgba(154, 43, 36, 0.08);
+  border: 1px solid rgba(154, 43, 36, 0.3);
+  border-radius: var(--radius);
+  color: var(--danger); font-size: 14px;
+}
+
+/* ---- Confirmation -------------------------------------------------------- */
+/* clears the arch motif sitting at the top of .arch-card */
+.confirm { text-align: center; padding-top: 46px; }
+.confirm .seal {
+  width: 64px; height: 64px; margin: 0 auto 18px;
+  border-radius: 50%; border: 1.5px solid var(--gold);
+  box-shadow: 0 0 0 5px rgba(185, 139, 46, 0.10);
+  background: radial-gradient(circle at 50% 30%, rgba(227, 198, 126, 0.3), transparent 72%);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gold); font-size: 30px;
+}
+.confirm h2 { font-family: var(--font-serif); font-size: 30px; margin: 0 0 6px; }
+.confirm .detail { font-family: var(--font-serif); font-size: 19px; color: var(--peacock-deep); margin: 18px 0; }
+.confirm p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+/* ---- Footer -------------------------------------------------------------- */
+.foot {
+  text-align: center; margin-top: 40px; padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-size: 12px; color: var(--faint); line-height: 1.7;
+}
+.foot a { color: var(--muted); }
+
+/* ---- Manager (staff / marketing) ---------------------------------------- */
+.mgr-top {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding: 24px 0 4px;
+}
+.mgr-top h1 { font-family: var(--font-display); font-size: 20px; letter-spacing: 2px; color: var(--peacock); margin: 0; }
+.mgr-top-actions { display: flex; align-items: center; gap: 14px; }
+.mgr-top .sign-out { font-size: 12px; color: var(--muted); background: none; border: none; cursor: pointer; text-decoration: underline; }
+
+/* iOS-style unread badge */
+.bell-btn {
+  position: relative;
+  background: none; border: none; cursor: pointer;
+  font-size: 20px; line-height: 1; padding: 2px;
+}
+.bell-badge {
+  position: absolute; top: -6px; right: -8px;
+  min-width: 17px; height: 17px; padding: 0 4px;
+  border-radius: 999px;
+  background: var(--danger);
+  color: var(--paper);
+  border: 2px solid var(--paper);
+  font-family: var(--font-ui); font-size: 10px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.week-switch { display: flex; gap: 8px; overflow-x: auto; padding: 14px 0; -webkit-overflow-scrolling: touch; }
+.week-chip {
+  flex: none; padding: 8px 14px; border: 1px solid var(--line-strong);
+  border-radius: 999px; background: var(--paper-raised); font-size: 13px;
+  color: var(--muted); cursor: pointer; white-space: nowrap; font-family: var(--font-ui);
+}
+.week-chip[aria-pressed='true'] { background: var(--peacock); border-color: var(--peacock); color: var(--paper); font-weight: 700; }
+.week-chip.jump { border-style: dashed; }
+
+/* Push notification toggle */
+.notif-row { margin: 2px 0 4px; }
+.notif-row .chip-btn { flex: none; padding: 8px 14px; }
+
+/* Date-jump calendar */
+.calendar {
+  margin: 4px 0 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  padding: 12px;
+}
+.cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.cal-head button {
+  width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line-strong);
+  background: var(--paper); color: var(--peacock); font-size: 16px; cursor: pointer;
+}
+.cal-title { font-family: var(--font-serif); font-size: 15px; color: var(--ink); }
+.cal-dow, .cal-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.cal-dow { margin-bottom: 4px; }
+.cal-dow div {
+  text-align: center; font-size: 10px; letter-spacing: 1px; color: var(--faint);
+  font-weight: 700; text-transform: uppercase;
+}
+.cal-row { margin-bottom: 4px; }
+.cal-day {
+  aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-ui); font-size: 13px; border-radius: 8px;
+}
+.cal-day.cal-muted { color: var(--faint); background: transparent; }
+.cal-day.cal-out { opacity: 0.35; }
+.cal-day.cal-sunday {
+  appearance: none; border: 1px solid var(--line-strong); background: var(--paper);
+  color: var(--peacock); font-weight: 700; cursor: pointer;
+}
+.cal-day.cal-sunday[aria-pressed='true'] {
+  background: var(--peacock); border-color: var(--peacock); color: var(--paper);
+}
+
+.tally { display: flex; gap: 10px; margin: 4px 0 18px; }
+.tally .stat { flex: 1; background: var(--paper-raised); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px; text-align: center; }
+.tally .num { font-family: var(--font-display); font-size: 26px; color: var(--peacock); }
+.tally .lbl { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--faint); font-weight: 700; margin-top: 2px; }
+
+.res-card {
+  background: var(--paper-raised); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 14px 16px; margin-bottom: 10px;
+  transition: background-color 0.6s ease, border-color 0.6s ease, box-shadow 0.6s ease;
+}
+.res-card.seated { opacity: 0.55; }
+.res-card.just-viewed {
+  border-color: var(--gold);
+  background: rgba(197, 155, 71, 0.12);
+  box-shadow: 0 0 0 3px rgba(197, 155, 71, 0.18);
+}
+.res-head { display: flex; justify-content: space-between; align-items: baseline; }
+.res-name { font-family: var(--font-serif); font-size: 20px; color: var(--ink); }
+.res-party { font-family: var(--font-display); font-size: 15px; color: var(--peacock); }
+.res-meta { font-size: 13px; color: var(--muted); margin-top: 4px; display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.res-meta a { color: var(--peacock); text-decoration: none; }
+.res-actions { display: flex; gap: 8px; margin-top: 12px; }
+.chip-btn {
+  flex: 1; font-family: var(--font-ui); font-size: 12px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; padding: 9px;
+  border-radius: var(--radius); cursor: pointer; border: 1px solid var(--line-strong);
+  background: var(--paper-raised); color: var(--peacock);
+}
+.chip-btn.solid { background: var(--peacock); color: var(--paper); border-color: var(--peacock); }
+.chip-btn.danger { color: var(--danger); border-color: rgba(154,43,36,0.35); flex: 0 0 auto; }
+
+.tag { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; padding: 2px 7px; border-radius: 999px; }
+.tag.opted-out { background: rgba(154,43,36,0.1); color: var(--danger); }
+.tag.active { background: rgba(46,110,78,0.12); color: var(--ok); }
+
+.toolbar { display: flex; gap: 10px; margin: 6px 0 16px; }
+.toolbar .search { flex: 1; }
+
+.empty { text-align: center; color: var(--faint); font-family: var(--font-serif); font-size: 18px; padding: 40px 0; }
+
+/* ---- PIN gate ------------------------------------------------------------ */
+.gate { max-width: 320px; margin: 12vh auto 0; text-align: center; }
+.gate h1 { font-family: var(--font-display); font-size: 22px; letter-spacing: 3px; color: var(--peacock); }
+.gate p { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+
+/* ---- Legal page ---------------------------------------------------------- */
+.legal { padding-top: 20px; }
+.legal h1 { font-family: var(--font-serif); font-size: 28px; color: var(--ink); }
+.legal h2 { font-family: var(--font-ui); font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); margin-top: 28px; }
+.legal p, .legal li { color: var(--muted); font-size: 15px; line-height: 1.65; }
+
+.loading { text-align: center; color: var(--faint); font-family: var(--font-serif); font-size: 18px; padding: 60px 0; }
+
+/* ---- "New reservations" modal --------------------------------------------- */
+.modal-backdrop {
+  position: fixed; inset: 0; background: rgba(20, 26, 21, 0.45);
+  display: flex; align-items: flex-end; justify-content: center;
+  z-index: 100; padding: 0;
+}
+.modal-panel {
+  width: 100%; max-width: 480px; max-height: 78vh;
+  background: var(--paper); border-radius: 16px 16px 0 0;
+  padding: 18px 18px 24px; overflow-y: auto;
+  box-shadow: 0 -8px 30px rgba(20, 26, 21, 0.25);
+}
+.modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 10px; position: sticky; top: 0; background: var(--paper); padding-bottom: 6px;
+}
+.modal-header h2 { font-family: var(--font-display); font-size: 17px; letter-spacing: 1px; color: var(--peacock); margin: 0; }
+.modal-close {
+  background: none; border: none; font-size: 24px; line-height: 1;
+  color: var(--faint); cursor: pointer; padding: 2px 6px;
+}
+.new-res-row {
+  display: block; width: 100%; text-align: left;
+  background: var(--paper-raised); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 12px 34px 12px 14px;
+  margin-bottom: 8px; cursor: pointer; position: relative;
+}
+.new-res-main { display: flex; justify-content: space-between; align-items: baseline; }
+.new-res-sub { font-size: 12.5px; color: var(--muted); margin-top: 3px; }
+.new-res-row .chevron {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  font-size: 20px; color: var(--faint);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
